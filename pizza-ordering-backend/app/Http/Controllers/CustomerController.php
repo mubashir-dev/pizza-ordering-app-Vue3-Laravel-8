@@ -31,17 +31,20 @@ class CustomerController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'mobile' => 'required|string',
+            'mobile' => 'required|numeric|digits_between:10,11|unique:customers',
             'city' => 'required|string',
             'address' => 'required|string'
         ]);
-            $customer =  Customer::create([
-                'name' => $request->name,
-                'mobile' => $request->mobile,
-                'city' => $request->city,
-                'address' => $request->address,
-            ]);
-            return response('Customer Record has been Created Successfully', 201);
+        Customer::create([
+            'name' => $request->name,
+            'mobile' => $request->mobile,
+            'city' => $request->city,
+            'address' => $request->address,
+        ]);
+        $response = [
+            'customers' => 'Customer Record has been Created Successfully'
+        ];
+        return response($response, 201);
     }
 
     /**
@@ -79,7 +82,7 @@ class CustomerController extends Controller
         if (!is_null($customer)) {
             $request->validate([
                 'name' => 'required|string',
-                'mobile' => 'required|string',
+                'mobile' => 'required|numeric|digits_between:10,11|unique:customers,mobile,'.$id,
                 'city' => 'required|string',
                 'address' => 'required|string'
             ]);

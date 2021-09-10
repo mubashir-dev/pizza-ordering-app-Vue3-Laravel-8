@@ -3,7 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PizzaController;
+use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PizzaCategoryController;
+use App\Models\Order;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +26,5 @@ use App\Http\Controllers\PizzaCategoryController;
 Route::apiResource('/PizzaCategory',PizzaCategoryController::class);
 Route::apiResource('/Pizza',PizzaController::class);
 Route::apiResource('/Customer',CustomerController::class);
-
+Route::post('/Orders',[OrdersController::class,'store']);
+Route::get('/Orders',[OrdersController::class,'index']);
