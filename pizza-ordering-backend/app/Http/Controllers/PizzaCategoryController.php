@@ -19,7 +19,7 @@ class PizzaCategoryController extends Controller
         $response = [
             'pizza-categories' => $pizzaCategories->toArray()
         ];
-        return response($response,200);
+        return response($response, 200);
     }
 
     /**
@@ -31,17 +31,16 @@ class PizzaCategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'=>'required|string|unique:pizza_categories',
+            'title' => 'required|string|unique:pizza_categories',
         ]);
         $pizzaCategory =  PizzaCategory::create([
             'title' => $request->title,
-            'description' => $request->description??"N/A",
+            'description' => $request->description ?? "N/A",
         ]);
-        $response =[
-            'message'=>'The Pizza Category has been Created'
+        $response = [
+            'message' => 'The Pizza Category has been Created'
         ];
         return response($response, 201);
-
     }
 
     /**
@@ -54,17 +53,14 @@ class PizzaCategoryController extends Controller
     {
         $pizzaCategory = PizzaCategory::find($id);
 
-        if(!is_null($pizzaCategory))
-        {
+        if (!is_null($pizzaCategory)) {
             $response = [
                 'pizza-category' => $pizzaCategory->toArray()
             ];
-            return response($response,200);
-            }
-        else
-        {
-            $response =[
-                'message'=>'The Pizza Category has not been Founded'
+            return response($response, 200);
+        } else {
+            $response = [
+                'message' => 'The Pizza Category has not been Founded'
             ];
             return response($response, 404);
         }
@@ -77,35 +73,27 @@ class PizzaCategoryController extends Controller
      * @param  \App\Models\PizzaCategory  $pizzaCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'title'=>'required|string',
-        ]);
         $pizzaCategory = PizzaCategory::find($id);
-        if(!is_null($pizzaCategory))
-        {
-            PizzaCategory::findorfail($id)->update([
-                'title' => $request->title,
-                'description' => $request->description??"N/A", ]);
-
-            $response =[
-                'message'=>'The Pizza Category has been Updated'
+        if (!is_null($pizzaCategory)) {
+            $this->validate($request, [
+                'title' => 'required|string'
+            ]);
+            $pizzaCategory['title'] = $request->title;
+            $pizzaCategory['description'] = $request->description??"N/A";
+            $pizzaCategory->update();
+            $response = [
+                'message' => 'The Pizza Category has been Updated'
             ];
             return response($response, 200);
-        }
-        else
-        {
-            $response =[
-                'message'=>'The Pizza Category has not been Founded'
+        } else {
+            $response = [
+                'message' => 'The Pizza Category has not been Founded'
             ];
             return response($response, 404);
         }
-
-
-
-
-        }
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -116,21 +104,17 @@ class PizzaCategoryController extends Controller
     public function destroy($id)
     {
         $pizzaCategory = PizzaCategory::find($id);
-        if(!is_null($pizzaCategory))
-        {
+        if (!is_null($pizzaCategory)) {
             $pizzaCategory->delete();
-            $response =[
-                'message'=>'The Pizza Category has been Deleted'
+            $response = [
+                'message' => 'The Pizza Category has been Deleted'
             ];
             return response($response, 200);
-        }
-        else
-        {
-            $response =[
-                'message'=>'The Pizza Category has not been Founded'
+        } else {
+            $response = [
+                'message' => 'The Pizza Category has not been Founded'
             ];
             return response($response, 404);
         }
-
     }
 }

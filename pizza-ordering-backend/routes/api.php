@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PizzaController;
 use App\Http\Controllers\PizzaCategoryController;
 
 /*
@@ -20,3 +21,6 @@ use App\Http\Controllers\PizzaCategoryController;
 // });
 
 Route::apiResource('/PizzaCategory',PizzaCategoryController::class);
+Route::apiResource('/Pizza',PizzaController::class);
+Route::apiResource('/Customer',CustomerController::class);
+
