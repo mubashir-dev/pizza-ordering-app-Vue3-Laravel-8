@@ -12,6 +12,6 @@ class OrderDetails extends Model
 
     public function pizza()
     {
-        return $this->hasMany(Pizza::class,'id','pizza_id');
+        return $this->hasOne(Pizza::class,'id','pizza_id');
     }
 }

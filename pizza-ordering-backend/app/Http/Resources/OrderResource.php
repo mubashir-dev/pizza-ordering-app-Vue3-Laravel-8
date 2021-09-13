@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Models\OrderDetails;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrdersCollections extends JsonResource
+class OrderResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -24,18 +25,8 @@ class OrdersCollections extends JsonResource
             'address'=>$this->customer->address,
             'total_amount'=>$this->total_amount,
             'total_tax'=>$this->total_tax_amount,
-            'order_details'=>[
-                'pizza_id'=>$this->orderDetails->each(function($item){
-                        // $item->pizza->first()->id;
-                $item;
-                    }),
-                'pizza_name'=>$this->orderDetails->each(function($item){
-                   // $item->pizza->first()->name;
-                    $item;
-            }),
-                'qty'=>$this->orderDetails
-            ],
-            'status'=>$this->status,
+            'order_details'=> OrderDetailResource::collection($this->orderDetails),
+            'status'=>$this->status=='true'?'The Order has Closed':'The  Order is Pending',
             'created_at'=>$this->created_at,
             'updated_at'=>$this->updated_at
         ];
