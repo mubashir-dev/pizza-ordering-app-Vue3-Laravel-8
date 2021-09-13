@@ -46,13 +46,13 @@ export default [
       menu: [
         {
           label: 'Create Category',
-          to: '/create-pizza',
+          to: '/create-category',
           icon: mdiBookPlus
 
         },
         {
           label: 'Category List',
-          to: '/pizzas',
+          to: '/pizza-categories',
           icon: mdiClipboardList
 
         }

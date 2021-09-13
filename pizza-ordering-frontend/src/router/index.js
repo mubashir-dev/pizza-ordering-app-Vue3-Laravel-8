@@ -22,6 +22,22 @@ const routes = [
     meta: {
       title: 'Create Pizza'
     },
+    path: '/create-category',
+    name: 'Create Pizza Category',
+    component: () => import(/* webpackChunkName: "tables" */ '../views/CreatePizzaCategory')
+  },
+  {
+    meta: {
+      title: 'Pizza Categories'
+    },
+    path: '/pizza-categories',
+    name: 'Pizza Categories',
+    component: () => import(/* webpackChunkName: "tables" */ '../views/PizzaCategories')
+  },
+  {
+    meta: {
+      title: 'Create Pizza'
+    },
     path: '/create-pizza',
     name: 'Create Pizza',
     component: () => import(/* webpackChunkName: "tables" */ '../views/CreatePizza')

@@ -1,16 +1,17 @@
+/* eslint-disable no-undef */
 import { createApp } from 'vue'
 
 import App from './App.vue'
 import router from './router'
 import store from './store'
-
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 import './css/main.css'
-
 /* Fetch sample data */
 store.dispatch('fetchClients')
 
 /* Default title tag */
-const defaultDocumentTitle = 'Admin One Vue 3 Tailwind'
+const defaultDocumentTitle = 'Pizza Ordering App'
 
 /* Collapse mobile aside menu on route change & set document title from route meta */
 router.beforeEach(to => {
@@ -28,4 +29,4 @@ router.afterEach(to => {
   }
 })
 
-createApp(App).use(store).use(router).mount('#app')
+createApp(App).use(store).use(VueAxios, axios).use(router).mount('#app')

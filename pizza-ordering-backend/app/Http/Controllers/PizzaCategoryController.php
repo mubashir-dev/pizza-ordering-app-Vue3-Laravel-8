@@ -15,9 +15,9 @@ class PizzaCategoryController extends Controller
      */
     public function index()
     {
-        $pizzaCategories = PizzaCategory::orderBy('id', 'asc')->get();
+        $pizzaCategories = PizzaCategory::orderBy('id', 'DESC')->get();
         $response = [
-            'pizza-categories' => $pizzaCategories->toArray()
+            'PizzaCategories' => $pizzaCategories->toArray()
         ];
         return response($response, 200);
     }

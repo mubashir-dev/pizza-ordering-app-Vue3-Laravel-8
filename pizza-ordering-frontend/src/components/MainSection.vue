@@ -1,5 +1,5 @@
 <template>
-  <section class="px-0 py-6 md:px-6" :class="{'flex h-screen items-center justify-center':isFormScreen}">
+  <section class="px-0 py-6 md:px-6 mb-7" :class="{'flex h-screen items-center justify-center':isFormScreen}">
     <slot/>
   </section>
 </template>

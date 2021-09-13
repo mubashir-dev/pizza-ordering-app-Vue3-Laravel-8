@@ -1,9 +1,9 @@
 <template>
   <title-bar :title-stack="titleStack" />
-  <hero-bar>Add Pizza Category</hero-bar>
+  <hero-bar>Edit Pizza Category</hero-bar>
   <main-section>
     <card-component
-      title="Create Pizza Category"
+      title="Edit Pizza Category"
       :icon="mdiBallot"
       @submit.prevent="addCategory"
       form
@@ -89,6 +89,22 @@ export default {
     }
   },
   methods: {
+    addCategory () {
+      console.log(this.axios)
+      this.axios.post('http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/PizzaCategory', this.PizzaCategory)
+        .then((response) => {
+          console.log(response)
+          if (response.status === 201) {
+            //   console.log(this.$router);
+            this.$router.push('/pizza-categories')
+          }
+        })
+        .catch((error) => {
+          this.errors = error
+          console.log(this.errors)
+        })
+        .finally(() => (this.loading = false))
+    },
     addCategory () {
       console.log(this.axios)
       this.axios.post('http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/PizzaCategory', this.PizzaCategory)

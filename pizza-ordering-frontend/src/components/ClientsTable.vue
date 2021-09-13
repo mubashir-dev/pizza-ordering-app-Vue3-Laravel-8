@@ -8,17 +8,16 @@
     <span v-for="checkedRow in checkedRows" :key="checkedRow.id" class="inline-block bg-gray-100 px-2 py-1 rounded-sm mr-2 text-sm">{{ checkedRow.name }}</span>
   </div>
 
-  <table>
+  <table class="text-center">
     <thead>
     <tr>
       <th v-if="checkable"></th>
-      <th></th>
       <th>Name</th>
       <th>Company</th>
       <th>City</th>
       <th>Progress</th>
       <th>Created</th>
-      <th></th>
+      <th>Actions</th>
     </tr>
     </thead>
     <tbody>

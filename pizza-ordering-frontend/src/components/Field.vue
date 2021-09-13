@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-6 last:mb-0">
+  <div class="mb-12 last:mb-0">
     <label v-if="label" class="block font-bold mb-2">{{ label }}</label>
     <div :class="wrapperClass">
       <slot />
