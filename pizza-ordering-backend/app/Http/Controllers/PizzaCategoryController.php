@@ -55,7 +55,7 @@ class PizzaCategoryController extends Controller
 
         if (!is_null($pizzaCategory)) {
             $response = [
-                'pizza-category' => $pizzaCategory->toArray()
+                'pizza_category' => $pizzaCategory->toArray()
             ];
             return response($response, 200);
         } else {
@@ -105,11 +105,23 @@ class PizzaCategoryController extends Controller
     {
         $pizzaCategory = PizzaCategory::find($id);
         if (!is_null($pizzaCategory)) {
-            $pizzaCategory->delete();
-            $response = [
-                'message' => 'The Pizza Category has been Deleted'
-            ];
-            return response($response, 200);
+            if(is_null($pizzaCategory->pizza))
+            {
+                $pizzaCategory->delete();
+                $response = [
+                    'message' => 'The Pizza Category has been Deleted'
+                ];
+                return response($response, 200);
+            }
+            else
+            {
+                $response = [
+                    'message' => 'The Pizza Category can not be Deleted',
+                    'status' => '409'
+                ];
+                return response($response, 200);
+            }
+
         } else {
             $response = [
                 'message' => 'The Pizza Category has not been Founded'

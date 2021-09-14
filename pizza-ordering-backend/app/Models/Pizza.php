@@ -17,4 +17,5 @@ class Pizza extends Model
         return $this->hasOne(PizzaCategory::class);
     }
 
+
 }

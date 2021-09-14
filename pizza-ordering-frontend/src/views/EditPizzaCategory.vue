@@ -9,14 +9,21 @@
       form
     >
       <field label="Category Title" help="">
-        <control v-model="PizzaCategory.title" placeholder="Pizza Category Title" />
+        <control
+          v-model="PizzaCategory.title"
+          placeholder="Pizza Category Title"
+        />
       </field>
-      <field label="Category Description" help="" >
-        <control type="textarea" placeholder="Pizza Category Description"  v-model="PizzaCategory.description"/>
+      <field label="Category Description" help="">
+        <control
+          type="textarea"
+          placeholder="Pizza Category Description"
+          v-model="PizzaCategory.description"
+        />
       </field>
       <divider />
       <jb-buttons>
-        <jb-button type="submit" color="info" label="Submit" />
+        <jb-button type="submit" color="info" label="Submit" @click="editCategory"/>
         <jb-button type="reset" color="info" outline label="Reset" />
       </jb-buttons>
     </card-component>
@@ -55,6 +62,11 @@ export default {
     JbButton,
     JbButtons
   },
+  data () {
+    return {
+      PizzaCategory: []
+    }
+  },
   setup () {
     const titleStack = ref(['Admin', 'Create Pizza'])
 
@@ -63,12 +75,6 @@ export default {
       { id: 2, label: 'Marketing' },
       { id: 3, label: 'Sales' }
     ]
-
-    const PizzaCategory = reactive({
-      title: '',
-      description: ''
-
-    })
 
     const customElementsForm = reactive({
       checkbox: ['lorem'],
@@ -79,7 +85,6 @@ export default {
     return {
       titleStack,
       selectOptions,
-      PizzaCategory,
       customElementsForm,
       mdiBallot,
       mdiBallotOutline,
@@ -88,30 +93,25 @@ export default {
       mdiCheck
     }
   },
+  created () {
+    this.axios
+      .get(
+        `http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/PizzaCategory/${this.$route.params.id}`)
+      .then((response) => {
+        console.log(response.data)
+        this.PizzaCategory = response.data.pizza_category
+      })
+      .catch((error) => {
+        this.errors = error
+        console.log(this.errors)
+      })
+      .finally(() => (this.loading = false))
+  },
   methods: {
-    addCategory () {
-      console.log(this.axios)
-      this.axios.post('http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/PizzaCategory', this.PizzaCategory)
+    editCategory () {
+      this.axios.put(`http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/PizzaCategory/${this.$route.params.id}`, this.PizzaCategory)
         .then((response) => {
-          console.log(response)
-          if (response.status === 201) {
-            //   console.log(this.$router);
-            this.$router.push('/pizza-categories')
-          }
-        })
-        .catch((error) => {
-          this.errors = error
-          console.log(this.errors)
-        })
-        .finally(() => (this.loading = false))
-    },
-    addCategory () {
-      console.log(this.axios)
-      this.axios.post('http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/PizzaCategory', this.PizzaCategory)
-        .then((response) => {
-          console.log(response)
-          if (response.status === 201) {
-            //   console.log(this.$router);
+          if (response.status === 200) {
             this.$router.push('/pizza-categories')
           }
         })
@@ -122,5 +122,6 @@ export default {
         .finally(() => (this.loading = false))
     }
   }
+
 }
 </script>

@@ -7,6 +7,7 @@
         <th>Title</th>
         <th>Description</th>
         <th>Created</th>
+        <th>Updated</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -18,6 +19,11 @@
         <td data-label="Created">
           <small class="text-gray-500" :title="category.created_at">
             {{ category.created_at }}</small
+          >
+        </td>
+         <td data-label="Created">
+          <small class="text-gray-500" :title="category.updated_at">
+            {{ category.updated_at }}</small
           >
         </td>
         <td class="actions-cell">
@@ -90,7 +96,6 @@ export default {
       )
       .then((response) => {
         this.pizza_categories = response.data.PizzaCategories
-        console.log(response.data.PizzaCategories)
       })
       .catch((error) => console.log(error))
       .finally(() => (this.loading = false))
@@ -98,22 +103,34 @@ export default {
   methods: {
     deleteCategory (id) {
       this.axios
-        // eslint-disable-next-line no-template-curly-in-string
         .delete(`http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/PizzaCategory/${id}`)
         .then((response) => {
-          this.axios
-            .get(
-              'http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/PizzaCategory'
-            )
-            .then((response) => {
-              this.pizza_categories = response.data.PizzaCategories
-              console.log(response.data.PizzaCategories)
-            })
-            .catch((error) => console.log(error))
-            .finally(() => (this.loading = false))
+          // eslint-disable-next-line eqeqeq
+          if (response.data.status == 409) {
+            alert(response.data.message)
+          } else {
+            alert(response.data.message)
+            this.axios
+              .get(
+                'http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/PizzaCategory'
+              )
+              .then((response) => {
+                this.pizza_categories = response.data.PizzaCategories
+              })
+              .catch((error) => console.log(error))
+              .finally(() => (this.loading = false))
+          }
+          //
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+          console.log(error)
+        })
         .finally(() => (this.loading = false))
+    },
+    editCategory (id) {
+      this.$router.push({
+        path: `/edit-category/${id}`
+      })
     }
   }
 }

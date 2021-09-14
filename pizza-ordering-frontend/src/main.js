@@ -6,7 +6,12 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueSweetener2 from 'vue-sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
+
 import './css/main.css'
+
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 /* Fetch sample data */
 store.dispatch('fetchClients')
 
@@ -29,4 +34,4 @@ router.afterEach(to => {
   }
 })
 
-createApp(App).use(store).use(VueAxios, axios).use(router).mount('#app')
+createApp(App).use(store).use(VueAxios, axios, VueSweetener2).use(router).mount('#app')

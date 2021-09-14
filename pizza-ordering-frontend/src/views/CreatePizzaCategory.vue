@@ -95,7 +95,6 @@ export default {
         .then((response) => {
           console.log(response)
           if (response.status === 201) {
-            //   console.log(this.$router);
             this.$router.push('/pizza-categories')
           }
         })
