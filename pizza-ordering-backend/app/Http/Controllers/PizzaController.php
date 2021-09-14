@@ -17,7 +17,7 @@ class PizzaController extends Controller
     {
         $pizzas = Pizza::orderBy('id', 'desc')->get();
         $response = [
-            'pizzas-list' => $pizzas->toArray()
+            'pizzas_list' => $pizzas->toArray()
         ];
         return response($response, 200);
     }
