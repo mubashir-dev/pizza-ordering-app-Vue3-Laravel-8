@@ -6,7 +6,7 @@
       :name="name"
       :id="id"
       :class="inputElClass">
-      <option v-for="option in options" :key="option.id ?? option" :value="option">{{ option.label ?? option }}</option>
+      <option v-for="option in options" :key="option.id ?? option.id" :value="option.id">{{ option.title ?? option.title }}</option>
     </select>
     <textarea
       v-else-if="computedType === 'textarea'"

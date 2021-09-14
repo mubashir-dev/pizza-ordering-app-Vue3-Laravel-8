@@ -23,19 +23,16 @@ use App\Http\Controllers\PizzaCategoryController;
 //     return $request->user();
 // });
 
-Route::post('/login',[AuthController::class,'login']);
-Route::group(['middleware'=>['auth:sanctum']],function(){
-    Route::get('/users',[AuthController::class,'users']);
-    Route::post('/register',[AuthController::class,'register']);
-    Route::post('/logout',[AuthController::class,'logout']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/users', [AuthController::class, 'users']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
-// Route::middleware(['cors'])->group(function () {
-    Route::apiResource('/PizzaCategory',PizzaCategoryController::class);
-    Route::apiResource('/Pizza',PizzaController::class);
-    Route::apiResource('/Customer',CustomerController::class);
-    Route::post('/Orders',[OrdersController::class,'store']);
-    Route::get('/Orders',[OrdersController::class,'index']);
-    Route::get('/Complete/{id}',[OrdersController::class,'completeOrder']);
-// });
-
-
+Route::apiResource('/PizzaCategory', PizzaCategoryController::class);
+Route::get('/categories', [PizzaCategoryController::class, 'categories']);
+Route::apiResource('/Pizza', PizzaController::class);
+Route::apiResource('/Customer', CustomerController::class);
+Route::post('/Orders', [OrdersController::class, 'store']);
+Route::get('/Orders', [OrdersController::class, 'index']);
+Route::get('/Complete/{id}', [OrdersController::class, 'completeOrder']);

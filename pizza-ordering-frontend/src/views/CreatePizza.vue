@@ -2,129 +2,96 @@
   <title-bar :title-stack="titleStack" />
   <hero-bar>Add Pizza</hero-bar>
   <main-section>
-    <card-component title="Forms" :icon="mdiBallot" @submit.prevent="submit" form>
-      <field label="Grouped with icons">
-        <control :icon="mdiAccount" v-model="form.name" />
-        <control type="email" :icon="mdiMail" v-model="form.email" />
+    <card-component
+      title="Create Pizza"
+      :icon="mdiBallot"
+      @submit.prevent="submit"
+      form
+    >
+      <field label="Title">
+        <control type="text" placeholder="Title" v-model="pizza.title" />
       </field>
-
-      <field label="With help line" help="Do not enter the leading zero">
-        <control type="tel" placeholder="Your phone number" v-model="form.phone" />
+      <field label="Ingredients">
+        <control
+          type="tel"
+          placeholder="Pizza Ingredients"
+          v-model="pizza.ingredients"
+        />
       </field>
-
-      <field label="Dropdown">
-        <control :options="selectOptions" v-model="form.department" />
+      <field label="Category">
+        <control
+          :options="this.PizzaCategories"
+          v-model="pizza.pizza_category_id"
+        />
       </field>
-
-      <divider/>
-
-      <field label="Question" help="Your question. Max 255 characters">
-        <control type="textarea" placeholder="Explain how we can help you"/>
+      <field label="Photo">
+        <file-picker label="Upload Pizza Photo" v-model="pizza.photo_url" />
       </field>
-
-      <divider/>
-
+      <field label="Price">
+        <control
+          type="number"
+          placeholder="Price"
+          v-model="pizza.price"
+        />
+      </field>
+      <field label="Tax">
+        <control type="number" placeholder="Pizza tax" v-model="pizza.tax" />
+      </field>
+      <field label="Description">
+        <control type="textarea" placeholder="Description About Pizza" />
+      </field>
       <jb-buttons>
         <jb-button type="submit" color="info" label="Submit" />
         <jb-button type="reset" color="info" outline label="Reset" />
       </jb-buttons>
     </card-component>
-    <card-component title="Custom elements" :icon="mdiBallotOutline">
-
-      <field label="Checkbox" wrap-body>
-        <check-radio-picker
-          name="sample-checkbox"
-          v-model="customElementsForm.checkbox"
-          :options="{ lorem: 'Lorem', ipsum: 'Ipsum', dolore: 'Dolore' }"
-        />
-      </field>
-
-      <divider />
-
-      <field label="Radio" wrap-body>
-        <check-radio-picker
-          name="sample-radio"
-          type="radio"
-          v-model="customElementsForm.radio"
-          :options="{ one: 'One', two: 'Two' }"
-        ></check-radio-picker>
-      </field>
-
-      <divider />
-
-      <field label="Switch">
-        <check-radio-picker
-          name="sample-switch"
-          type="switch"
-          v-model="customElementsForm.switch"
-          :options="{ one: 'One', two: 'Two' }"
-        ></check-radio-picker>
-      </field>
-
-      <divider />
-
-      <file-picker v-model="customElementsForm.file" />
-    </card-component>
   </main-section>
-  <bottom-other-pages-section />
 </template>
 
 <script>
-import { ref, reactive } from 'vue'
-import { mdiBallot, mdiBallotOutline, mdiAccount, mdiMail, mdiCheck } from '@mdi/js'
+import { ref } from 'vue'
+import {
+  mdiBallot,
+  mdiBallotOutline,
+  mdiAccount,
+  mdiMail,
+  mdiCheck
+} from '@mdi/js'
 import MainSection from '@/components/MainSection'
 import TitleBar from '@/components/TitleBar'
 import CardComponent from '@/components/CardComponent'
-import CheckRadioPicker from '@/components/CheckRadioPicker'
+// import CheckRadioPicker from '@/components/CheckRadioPicker'
 import FilePicker from '@/components/FilePicker'
 import HeroBar from '@/components/HeroBar'
 import Field from '@/components/Field'
 import Control from '@/components/Control'
-import Divider from '@/components/Divider.vue'
+// import Divider from '@/components/Divider.vue'
 import JbButton from '@/components/JbButton'
 import JbButtons from '@/components/JbButtons'
-import BottomOtherPagesSection from '@/components/BottomOtherPagesSection'
 
 export default {
   name: 'Create Pizza',
   components: {
-    Divider,
     MainSection,
     HeroBar,
     FilePicker,
-    CheckRadioPicker,
+    // CheckRadioPicker,
     CardComponent,
     TitleBar,
     Field,
     Control,
     JbButton,
-    JbButtons,
-    BottomOtherPagesSection
+    JbButtons
   },
   setup () {
     const titleStack = ref(['Admin', 'Create Pizza'])
-
-    const selectOptions = [
-      { id: 1, label: 'Business development' },
-      { id: 2, label: 'Marketing' },
-      { id: 3, label: 'Sales' }
-    ]
-
-    const form = reactive({
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      phone: '',
-      department: selectOptions[0],
-      subject: '',
-      question: ''
-    })
-
-    const customElementsForm = reactive({
-      checkbox: ['lorem'],
-      radio: 'one',
-      switch: ['one'],
-      file: null
-    })
+    // const PizzaCategories = []
+    // const customElementsForm = reactive({
+    //   checkbox: ['lorem'],
+    //   radio: 'one',
+    //   switch: ['one'],
+    //   file: null
+    // })
 
     const submit = () => {
       //
@@ -132,9 +99,8 @@ export default {
 
     return {
       titleStack,
-      selectOptions,
-      form,
-      customElementsForm,
+      // form,
+      // customElementsForm,
       submit,
       mdiBallot,
       mdiBallotOutline,
@@ -142,6 +108,30 @@ export default {
       mdiMail,
       mdiCheck
     }
+  },
+  data () {
+    return {
+      pizza: {
+        title: '',
+        pizza_category_id: []
+      },
+      PizzaCategories: []
+    }
+  },
+  created () {
+    this.axios
+      .get(
+        'http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/categories'
+      )
+      .then((response) => {
+        this.PizzaCategories = response.data
+        console.log(response.data)
+      })
+      .catch((error) => {
+        this.errors = error
+        console.log(this.errors)
+      })
+      .finally(() => (this.loading = false))
   }
 }
 </script>

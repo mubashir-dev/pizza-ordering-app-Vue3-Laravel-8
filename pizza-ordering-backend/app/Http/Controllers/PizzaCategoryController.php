@@ -21,6 +21,14 @@ class PizzaCategoryController extends Controller
         ];
         return response($response, 200);
     }
+    public function categories()
+    {
+        $pizzaCategories = PizzaCategory::all();
+        // $response = [
+        //     'PizzaCategories' => $pizzaCategories->toArray()
+        // ];
+        return response($pizzaCategories, 200);
+    }
 
     /**
      * Store a newly created resource in storage.
