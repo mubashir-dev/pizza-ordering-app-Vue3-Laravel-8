@@ -14,8 +14,13 @@ class Pizza extends Model
         'updated_at' => 'datetime:Y-m-d'];
     public function category()
     {
-        return $this->hasOne(PizzaCategory::class);
+        return $this->hasOne(PizzaCategory::class,'id','pizza_category_id');
     }
+    public function orderDetails()
+    {
+        return $this->belongsTo(OrderDetails::class,'id','pizza_id');
+    }
+
 
 
 }

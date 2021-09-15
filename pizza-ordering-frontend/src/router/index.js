@@ -20,6 +20,30 @@ const routes = [
   },
   {
     meta: {
+      title: 'Pizza Detail'
+    },
+    path: '/pizza-detail/:id',
+    name: 'Pizza Detail',
+    component: () => import(/* webpackChunkName: "tables" */ '../views/PizzaDetail')
+  },
+  {
+    meta: {
+      title: 'Create Pizza'
+    },
+    path: '/create-pizza',
+    name: 'Create Pizza',
+    component: () => import(/* webpackChunkName: "tables" */ '../views/CreatePizza')
+  },
+  {
+    meta: {
+      title: 'Edit Pizza'
+    },
+    path: '/edit-pizza/:id',
+    name: 'Edit Pizza',
+    component: () => import(/* webpackChunkName: "tables" */ '../views/EditPizza')
+  },
+  {
+    meta: {
       title: 'Create Pizza Category'
     },
     path: '/create-category',
@@ -42,14 +66,7 @@ const routes = [
     name: 'Pizza Categories',
     component: () => import(/* webpackChunkName: "tables" */ '../views/PizzaCategories')
   },
-  {
-    meta: {
-      title: 'Create Pizza'
-    },
-    path: '/create-pizza',
-    name: 'Create Pizza',
-    component: () => import(/* webpackChunkName: "tables" */ '../views/CreatePizza')
-  },
+
   {
     meta: {
       title: 'Forms'

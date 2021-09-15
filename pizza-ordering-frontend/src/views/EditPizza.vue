@@ -1,11 +1,11 @@
 <template>
   <title-bar :title-stack="titleStack" />
-  <hero-bar>Add Pizza</hero-bar>
+  <hero-bar>Edit Pizza</hero-bar>
   <main-section>
     <card-component
       title="Create Pizza"
       :icon="mdiBallot"
-      @submit.prevent="addPizza"
+      @submit.prevent="editPizza"
       form
     >
       <field label="Title">
@@ -24,9 +24,9 @@
           v-model="pizza.pizza_category_id"
         />
       </field>
-      <field label="Photo">
+      <!-- <field label="Photo">
         <file-picker label="Upload Pizza Photo" v-model="pizza.photo_url" />
-      </field>
+      </field> -->
       <field label="Price">
         <control type="number" placeholder="Price" v-model="pizza.price" />
       </field>
@@ -45,6 +45,7 @@
         <jb-button type="reset" color="info" outline label="Reset" />
       </jb-buttons>
     </card-component>
+    {{ pizza }}
   </main-section>
 </template>
 
@@ -60,12 +61,10 @@ import {
 import MainSection from '@/components/MainSection'
 import TitleBar from '@/components/TitleBar'
 import CardComponent from '@/components/CardComponent'
-// import CheckRadioPicker from '@/components/CheckRadioPicker'
-import FilePicker from '@/components/FilePicker'
+// import FilePicker from '@/components/FilePicker'
 import HeroBar from '@/components/HeroBar'
 import Field from '@/components/Field'
 import Control from '@/components/Control'
-// import Divider from '@/components/Divider.vue'
 import JbButton from '@/components/JbButton'
 import JbButtons from '@/components/JbButtons'
 
@@ -74,7 +73,7 @@ export default {
   components: {
     MainSection,
     HeroBar,
-    FilePicker,
+    // FilePicker,
     // CheckRadioPicker,
     CardComponent,
     TitleBar,
@@ -84,7 +83,7 @@ export default {
     JbButtons
   },
   setup () {
-    const titleStack = ref(['Admin', 'Create Pizza'])
+    const titleStack = ref(['Admin', 'Edit Pizza'])
     return {
       titleStack,
       mdiBallot,
@@ -114,9 +113,23 @@ export default {
         console.log(this.errors)
       })
       .finally(() => (this.loading = false))
+    // Fetching Pizza Data
+    this.axios
+      .get(
+        // eslint-disable-next-line quotes
+        `http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/Pizza/${this.$route.params.id}`
+      )
+      .then((response) => {
+        this.pizza = response.data.pizza
+      })
+      .catch((error) => {
+        this.errors = error
+        console.log(this.errors)
+      })
+      .finally(() => (this.loading = false))
   },
   methods: {
-    addPizza () {
+    editPizza () {
       const formData = new FormData()
       formData.append('title', this.pizza.title)
       formData.append('ingredients', this.pizza.ingredients)
@@ -124,15 +137,15 @@ export default {
       formData.append('description', this.pizza.description)
       formData.append('price', this.pizza.price)
       formData.append('tax', this.pizza.tax)
-      formData.append('photo_url', this.pizza.photo_url)
+      // formData.append('photo_url', this.pizza.photo_url)
       this.axios
-        .post(
-          'http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/Pizza',
+        .patch(
+          `http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/Pizza/${this.$route.params.id}`,
           formData
         )
         .then((response) => {
           console.log(response)
-          if (response.status === 201) {
+          if (response.status === 200) {
             this.$router.push('/pizzas')
           }
         })

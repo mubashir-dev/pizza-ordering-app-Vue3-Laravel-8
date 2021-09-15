@@ -1,5 +1,11 @@
 <template>
-  <table>
+     <card-component :icon="mdiMonitorCellphone" title="Pizza Image" has-table>
+             <div class="image">
+          <img :src="pizza.photo" class="w-100 md:w-32 lg:w-48">
+        </div>
+    </card-component>
+    <card-component :icon="mdiMonitorCellphone" title="Pizza Detail" has-table>
+       <table>
     <thead>
       <tr>
         <th v-if="checkable"></th>
@@ -9,11 +15,10 @@
         <th>Description</th>
         <th>Created</th>
         <th>Updated</th>
-        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="pizza in pizzas" :key="pizza.id">
+      <tr>
         <td data-label="id">{{ pizza.id }}</td>
         <td data-label="Name">{{ pizza.title }}</td>
         <td data-label="Company">{{ pizza.pizza_category }}</td>
@@ -29,68 +34,31 @@
             {{ pizza.updated_at }}</small
           >
         </td>
-        <td class="actions-cell">
-          <jb-buttons type="justify-start" no-wrap>
-             <jb-button
-              color="warning"
-              :icon="mdiBullseye"
-              small
-              @click="viewPizza(pizza.id)"
-            />
-            <jb-button
-              class="mr-3"
-              color="success"
-              :icon="mdiBookEdit"
-              small
-              @click="editPizza(pizza.id)"
-            />
-            <jb-button
-              color="danger"
-              :icon="mdiTrashCan"
-              small
-              @click="deletePizza(pizza.id)"
-            />
-
-          </jb-buttons>
-        </td>
       </tr>
     </tbody>
   </table>
-  <!-- <div class="table-pagination">
-    <level>
-      <jb-buttons>
-        <jb-button
-          v-for="page in pagesList"
-          @click="currentPage = page"
-          :active="page === currentPage"
-          :label="page + 1"
-          :key="page"
-          small
-        />
-      </jb-buttons>
-      <small>Page {{ currentPageHuman }} of {{ numPages }}</small>
-    </level>
-  </div> -->
+    </card-component>
+    <card-component :icon="mdiMonitorCellphone" title="Pizza Ingredients" has-table>
+              {{pizza.ingredients}}
+    </card-component>
 </template>
 
 <script>
 // eslint-disable-next-line no-unused-vars
 import { mdiBookEdit, mdiTrashCan, mdiBullseye } from '@mdi/js'
-import JbButtons from '@/components/JbButtons'
-import JbButton from '@/components/JbButton'
+import CardComponent from '@/components/CardComponent'
 
 export default {
   name: 'PizzadTable',
   components: {
-    JbButtons,
-    JbButton
+    CardComponent
   },
   props: {
     checkable: Boolean
   },
   data () {
     return {
-      pizzas: []
+      pizza: []
     }
   },
   setup () {
@@ -103,11 +71,10 @@ export default {
   created () {
     this.axios
       .get(
-        'http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/Pizza'
+        `http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/Pizza/${this.$route.params.id}`
       )
       .then((response) => {
-        console.log(response.data.pizzas_list)
-        this.pizzas = response.data.pizzas_list
+        this.pizza = response.data.pizza
       })
       .catch((error) => console.log(error))
       .finally(() => (this.loading = false))
@@ -116,7 +83,7 @@ export default {
     deletePizza (id) {
       this.axios
         .delete(
-          `http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/Pizza/${id}`
+          `http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/PizzaCategory/${id}`
         )
         .then((response) => {
           // eslint-disable-next-line eqeqeq
@@ -126,10 +93,10 @@ export default {
             alert(response.data.message)
             this.axios
               .get(
-                'http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/Pizza'
+                'http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/PizzaCategory'
               )
               .then((response) => {
-                this.pizzas = response.data.pizzas_list
+                this.pizza_categories = response.data.PizzaCategories
               })
               .catch((error) => console.log(error))
               .finally(() => (this.loading = false))
@@ -143,7 +110,7 @@ export default {
     },
     editPizza (id) {
       this.$router.push({
-        path: `/edit-pizza/${id}`
+        path: `/edit-category/${id}`
       })
     },
     viewPizza (id) {
