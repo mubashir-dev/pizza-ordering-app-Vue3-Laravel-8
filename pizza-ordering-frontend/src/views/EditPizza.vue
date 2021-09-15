@@ -45,7 +45,6 @@
         <jb-button type="reset" color="info" outline label="Reset" />
       </jb-buttons>
     </card-component>
-    {{ pizza }}
   </main-section>
 </template>
 
@@ -106,7 +105,6 @@ export default {
       )
       .then((response) => {
         this.PizzaCategories = response.data
-        console.log(response.data)
       })
       .catch((error) => {
         this.errors = error
@@ -130,18 +128,18 @@ export default {
   },
   methods: {
     editPizza () {
-      const formData = new FormData()
-      formData.append('title', this.pizza.title)
-      formData.append('ingredients', this.pizza.ingredients)
-      formData.append('pizza_category_id', this.pizza.pizza_category_id)
-      formData.append('description', this.pizza.description)
-      formData.append('price', this.pizza.price)
-      formData.append('tax', this.pizza.tax)
+      // const formData = new FormData()
+      // formData.append('title', this.pizza.title)
+      // formData.append('ingredients', this.pizza.ingredients)
+      // formData.append('pizza_category_id', this.pizza.pizza_category_id)
+      // formData.append('description', this.pizza.description)
+      // formData.append('price', this.pizza.price)
+      // formData.append('tax', this.pizza.tax)
       // formData.append('photo_url', this.pizza.photo_url)
       this.axios
-        .patch(
+        .put(
           `http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/Pizza/${this.$route.params.id}`,
-          formData
+          this.pizza
         )
         .then((response) => {
           console.log(response)

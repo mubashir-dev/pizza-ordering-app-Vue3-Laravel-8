@@ -18,6 +18,7 @@ class PizzasResource extends JsonResource
             'id'=>$this->id,
             'title'=>$this->title,
             'pizza_category'=>$this->category->title??"N/A",
+            'pizza_category_id'=>$this->pizza_category_id,
             'description'=>$this->description,
             'photo'=>url($this->photo_url),
             'ingredients'=>json_decode($this->ingredients),
