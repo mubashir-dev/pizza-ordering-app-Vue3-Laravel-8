@@ -20,7 +20,6 @@ class OrdersController extends Controller
             'orders' => OrderCollections::collection(Order::orderBy('id','DESC')->get()),
         ];
         return response($response, 200);
-        // return OrderCollections::collection(Order::get());
     }
 
     /**
@@ -85,9 +84,20 @@ class OrdersController extends Controller
      * @param  \App\Models\Orders  $orders
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $orders)
+    public function show($id)
     {
-        //
+        $Order = Order::find($id);
+        if (!is_null($Order)) {
+            $response = [
+                'order' => new OrderCollections($Order)
+            ];
+            return response($response, 200);
+        } else {
+            $response = [
+                'message' => 'The Order record has not been Founded'
+            ];
+            return response($response, 404);
+        }
     }
 
     /**

@@ -27,8 +27,8 @@ class OrderResource extends JsonResource
             'total_tax'=>$this->total_tax_amount,
             'order_details'=> OrderDetailResource::collection($this->orderDetails),
             'status'=>$this->status=='true'?'The Order has Closed':'The  Order is Pending',
-            'created_at'=>$this->created_at,
-            'updated_at'=>$this->updated_at
+            'created_at'=>$this->created_at->format('Y-m-d'),
+            'updated_at'=>$this->updated_at->format('Y-m-d')
         ];
     }
 }

@@ -8,8 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','mobile','city','address'];
+    protected $fillable = ['name', 'mobile', 'city', 'address'];
     protected $casts = [
         'created_at' => 'datetime:Y-m-d',
-        'updated_at' => 'datetime:Y-m-d'];
+        'updated_at' => 'datetime:Y-m-d'
+    ];
+    public function orders()
+    {
+        return $this->belongsTo(Order::class, 'id', 'customer_id');
+    }
 }

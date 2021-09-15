@@ -13,6 +13,8 @@ class Order extends Model
         'created_at' => 'datetime:Y-m-d',
         'updated_at' => 'datetime:Y-m-d'
     ];
+    protected $hidden = ['pivot'];
+
     public function orderDetails()
     {
         return $this->hasMany(OrderDetails::class);

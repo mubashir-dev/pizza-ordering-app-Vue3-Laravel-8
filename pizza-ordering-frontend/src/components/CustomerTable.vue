@@ -1,56 +1,54 @@
 <template>
-  <table>
+  <table class="text-center">
     <thead>
       <tr>
-        <th v-if="checkable"></th>
         <th>#</th>
-        <th>Title</th>
-        <th>Category</th>
-        <th>Description</th>
-        <th>Created</th>
-        <th>Updated</th>
+        <th>Name</th>
+        <th>Order Placed</th>
+        <th>City</th>
+        <th>Mobile</th>
+        <th>Address</th>
+        <th>Order Placed Date</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="pizza in pizzas" :key="pizza.id">
-        <td data-label="id">{{ pizza.id }}</td>
-        <td data-label="Name">{{ pizza.title }}</td>
-        <td data-label="Company">{{ pizza.pizza_category }}</td>
-        <!-- <td data-label="Company">{{ pizza.ingredients }}</td> -->
-        <td data-label="Company">{{ pizza.description }}</td>
+      <tr v-for="customer in customers" :key="customer.id">
+        <td data-label="id">{{ customer.id }}</td>
+        <td data-label="Name">{{ customer.name }}</td>
+        <td data-label="id"><span class="badge badge-success">{{ customer.orders }}</span></td>
+        <td data-label="Company">{{ customer.city }}</td>
+        <td data-label="Company">{{ customer.mobile }}</td>
+        <td data-label="Company">{{ customer.address }}</td>
         <td data-label="Created">
-          <small class="text-gray-500" :title="pizza.created_at">
-            {{ pizza.created_at }}</small
-          >
+          <small class="text-gray-500" :title="customer.created_at">
+            {{ customer.created_at }}</small>
         </td>
-        <td data-label="Created">
-          <small class="text-gray-500" :title="pizza.updated_at">
-            {{ pizza.updated_at }}</small
-          >
-        </td>
+        <!-- <td data-label="Created">
+          <small class="text-gray-500" :title="customer.updated_at">
+            {{ customer.updated_at }}</small>
+        </td> -->
         <td class="actions-cell">
           <jb-buttons type="justify-start" no-wrap>
              <jb-button
               color="warning"
               :icon="mdiEye"
               small
-              @click="viewPizza(pizza.id)"
+              @click="viewPizza(customer.id)"
             />
-            <jb-button
+            <!-- <jb-button
               class="mr-3"
               color="success"
               :icon="mdiBookEdit"
               small
-              @click="editPizza(pizza.id)"
+              @click="editPizza(customer.id)"
             />
             <jb-button
               color="danger"
               :icon="mdiTrashCan"
               small
-              @click="deletePizza(pizza.id)"
-            />
-
+              @click="deletePizza(customer.id)"
+            /> -->
           </jb-buttons>
         </td>
       </tr>
@@ -80,7 +78,7 @@ import JbButtons from '@/components/JbButtons'
 import JbButton from '@/components/JbButton'
 
 export default {
-  name: 'PizzadTable',
+  name: 'CustomerTable',
   components: {
     JbButtons,
     JbButton
@@ -90,7 +88,7 @@ export default {
   },
   data () {
     return {
-      pizzas: []
+      customers: []
     }
   },
   setup () {
@@ -103,11 +101,10 @@ export default {
   created () {
     this.axios
       .get(
-        'http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/Pizza'
+        'http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/Customer'
       )
       .then((response) => {
-        console.log(response.data.pizzas_list)
-        this.pizzas = response.data.pizzas_list
+        this.customers = response.data.customers
       })
       .catch((error) => console.log(error))
       .finally(() => (this.loading = false))

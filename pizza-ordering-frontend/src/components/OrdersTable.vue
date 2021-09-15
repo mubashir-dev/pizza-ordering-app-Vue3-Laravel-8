@@ -1,33 +1,28 @@
 <template>
-  <table>
+  <table class="text-center">
     <thead>
       <tr>
-        <th v-if="checkable"></th>
         <th>#</th>
-        <th>Title</th>
-        <th>Category</th>
-        <th>Description</th>
-        <th>Created</th>
-        <th>Updated</th>
+        <th>Order No</th>
+        <th>Name</th>
+        <th>G.Amount</th>
+        <th>G.Tax</th>
+        <th>Status</th>
+        <th>Order Placed Date</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="pizza in pizzas" :key="pizza.id">
-        <td data-label="id">{{ pizza.id }}</td>
-        <td data-label="Name">{{ pizza.title }}</td>
-        <td data-label="Company">{{ pizza.pizza_category }}</td>
-        <!-- <td data-label="Company">{{ pizza.ingredients }}</td> -->
-        <td data-label="Company">{{ pizza.description }}</td>
+      <tr v-for="order in orders" :key="order.id">
+        <td data-label="id">{{ order.id }}</td>
+        <td data-label="Name">{{ order.order_no }}</td>
+        <td data-label="id"><span class="badge badge-success">{{ order.customer_name }}</span></td>
+        <td data-label="Company">{{ order.total_amount }}</td>
+        <td data-label="Company">{{ order.total_tax }}</td>
+        <td data-label="Company">{{ order.status }}</td>
         <td data-label="Created">
-          <small class="text-gray-500" :title="pizza.created_at">
-            {{ pizza.created_at }}</small
-          >
-        </td>
-        <td data-label="Created">
-          <small class="text-gray-500" :title="pizza.updated_at">
-            {{ pizza.updated_at }}</small
-          >
+          <small class="text-gray-500" :title="order.created_at">
+            {{ order.created_at }}</small>
         </td>
         <td class="actions-cell">
           <jb-buttons type="justify-start" no-wrap>
@@ -35,22 +30,15 @@
               color="warning"
               :icon="mdiEye"
               small
-              @click="viewPizza(pizza.id)"
+              @click="viewOrder(order.id)"
             />
-            <jb-button
+           <jb-button
               class="mr-3"
               color="success"
-              :icon="mdiBookEdit"
+              :icon="mdiAccountCheck"
               small
-              @click="editPizza(pizza.id)"
+              @click="completeOrder(order.id)"
             />
-            <jb-button
-              color="danger"
-              :icon="mdiTrashCan"
-              small
-              @click="deletePizza(pizza.id)"
-            />
-
           </jb-buttons>
         </td>
       </tr>
@@ -75,12 +63,12 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import { mdiBookEdit, mdiTrashCan, mdiEye } from '@mdi/js'
+import { mdiBookEdit, mdiAccountCheck, mdiEye } from '@mdi/js'
 import JbButtons from '@/components/JbButtons'
 import JbButton from '@/components/JbButton'
 
 export default {
-  name: 'PizzadTable',
+  name: 'CustomerTable',
   components: {
     JbButtons,
     JbButton
@@ -90,33 +78,32 @@ export default {
   },
   data () {
     return {
-      pizzas: []
+      orders: []
     }
   },
   setup () {
     return {
       mdiBookEdit,
-      mdiTrashCan,
+      mdiAccountCheck,
       mdiEye
     }
   },
   created () {
     this.axios
       .get(
-        'http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/Pizza'
+        'http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/Orders'
       )
       .then((response) => {
-        console.log(response.data.pizzas_list)
-        this.pizzas = response.data.pizzas_list
+        this.orders = response.data.orders
       })
       .catch((error) => console.log(error))
       .finally(() => (this.loading = false))
   },
   methods: {
-    deletePizza (id) {
+    completeOrder (id) {
       this.axios
-        .delete(
-          `http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/Pizza/${id}`
+        .get(
+          `http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/Complete/${id}`
         )
         .then((response) => {
           // eslint-disable-next-line eqeqeq
@@ -126,29 +113,23 @@ export default {
             alert(response.data.message)
             this.axios
               .get(
-                'http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/Pizza'
+                'http://localhost/pizza-ordering-app-Vue3-Laravel-8-/pizza-ordering-backend/public/api/Orders'
               )
               .then((response) => {
-                this.pizzas = response.data.pizzas_list
+                this.orders = response.data.orders
               })
               .catch((error) => console.log(error))
               .finally(() => (this.loading = false))
           }
-          //
         })
         .catch((error) => {
           console.log(error)
         })
         .finally(() => (this.loading = false))
     },
-    editPizza (id) {
+    viewOrder (id) {
       this.$router.push({
-        path: `/edit-pizza/${id}`
-      })
-    },
-    viewPizza (id) {
-      this.$router.push({
-        path: `/pizza-detail/${id}`
+        path: `/orders-details/${id}`
       })
     }
   }

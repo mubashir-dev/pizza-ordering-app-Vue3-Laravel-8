@@ -66,6 +66,30 @@ const routes = [
     name: 'Pizza Categories',
     component: () => import(/* webpackChunkName: "tables" */ '../views/PizzaCategories')
   },
+  {
+    meta: {
+      title: 'Customers'
+    },
+    path: '/customers',
+    name: 'Customers',
+    component: () => import(/* webpackChunkName: "tables" */ '../views/Customers')
+  },
+  {
+    meta: {
+      title: 'Orders'
+    },
+    path: '/orders',
+    name: 'Orders',
+    component: () => import(/* webpackChunkName: "tables" */ '../views/Orders')
+  },
+  {
+    meta: {
+      title: 'Order Detail'
+    },
+    path: '/orders-details/:id',
+    name: 'Order Detail',
+    component: () => import(/* webpackChunkName: "tables" */ '../views/OrderDetails')
+  },
 
   {
     meta: {

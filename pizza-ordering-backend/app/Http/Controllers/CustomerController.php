@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CustomerResource as CustomerCollection;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::orderBy('id', 'asc')->get();
         $response = [
-            'customers' => $customers->toArray()
+            'customers' => CustomerCollection::collection(Customer::orderBy('id','DESC')->get()),
         ];
         return response($response, 200);
     }

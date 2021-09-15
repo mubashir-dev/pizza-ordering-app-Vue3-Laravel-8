@@ -35,4 +35,5 @@ Route::apiResource('/Pizza', PizzaController::class);
 Route::apiResource('/Customer', CustomerController::class);
 Route::post('/Orders', [OrdersController::class, 'store']);
 Route::get('/Orders', [OrdersController::class, 'index']);
+Route::get('/Orders/{id}', [OrdersController::class, 'show']);
 Route::get('/Complete/{id}', [OrdersController::class, 'completeOrder']);
