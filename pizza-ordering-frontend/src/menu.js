@@ -1,7 +1,7 @@
 import {
   mdiAccountCircle,
   mdiDesktopMac,
-  mdiShieldAccount,
+  // mdiShieldAccount,
   mdiBookPlus,
   mdiPizza,
   mdiAccountGroup,
@@ -69,29 +69,31 @@ export default [
       icon: mdiClipboardFileOutline
     },
     {
-      to: '/users',
+      to: '/user_list',
       label: "User's",
       icon: mdiAccountCircle,
       menu: [
         {
           label: 'Create User',
+          to: '/create-user',
           icon: mdiBookPlus
 
         },
         {
           label: 'All Users',
+          to: '/user_list',
           icon: mdiClipboardList
 
         }
       ]
     }
-  ],
-  'About',
-  [
-    {
-      href: '/',
-      label: 'Developer Profile',
-      icon: mdiShieldAccount
-    }
   ]
+  // 'About',
+  // [
+  //   {
+  //     href: '/',
+  //     label: 'Developer Profile',
+  //     icon: mdiShieldAccount
+  //   }
+  // ]
 ]

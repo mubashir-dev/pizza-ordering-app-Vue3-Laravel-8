@@ -9,7 +9,6 @@
         <th>Mobile</th>
         <th>Address</th>
         <th>Order Placed Date</th>
-        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -28,7 +27,7 @@
           <small class="text-gray-500" :title="customer.updated_at">
             {{ customer.updated_at }}</small>
         </td> -->
-        <td class="actions-cell">
+        <!-- <td class="actions-cell">
           <jb-buttons type="justify-start" no-wrap>
              <jb-button
               color="warning"
@@ -36,7 +35,7 @@
               small
               @click="viewPizza(customer.id)"
             />
-            <!-- <jb-button
+           <jb-button
               class="mr-3"
               color="success"
               :icon="mdiBookEdit"
@@ -49,8 +48,8 @@
               small
               @click="deletePizza(customer.id)"
             /> -->
-          </jb-buttons>
-        </td>
+          <!-- </jb-buttons> -->
+        <!-- </td> -->
       </tr>
     </tbody>
   </table>
@@ -74,14 +73,14 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import { mdiBookEdit, mdiTrashCan, mdiEye } from '@mdi/js'
-import JbButtons from '@/components/JbButtons'
-import JbButton from '@/components/JbButton'
+// import JbButtons from '@/components/JbButtons'
+// import JbButton from '@/components/JbButton'
 
 export default {
   name: 'CustomerTable',
   components: {
-    JbButtons,
-    JbButton
+    // JbButtons,
+    // JbButton
   },
   props: {
     checkable: Boolean

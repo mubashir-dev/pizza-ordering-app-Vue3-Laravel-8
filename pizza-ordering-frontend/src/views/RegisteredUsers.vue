@@ -1,50 +1,33 @@
 <template>
   <title-bar :title-stack="titleStack" />
-  <hero-bar>Dashboard</hero-bar>
-  <main-section class="vh-100">
+  <hero-bar>Registered Users</hero-bar>
+  <main-section>
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
-      <card-widget
+      <!-- <card-widget
         class="tile"
         color="text-green-500"
         :icon="mdiAccountMultiple"
         :number="512"
-        label="Orders"
+        label="Total In Stock"
       />
       <card-widget
         class="tile"
         color="text-blue-500"
         :icon="mdiCartOutline"
         :number="7770"
-        label="Customers"
+        prefix="PKR "
+        label="Categories"
       />
       <card-widget
         class="tile"
         color="text-red-500"
         :icon="mdiChartTimelineVariant"
-        :number="256"
-        label="Users"
-      />
+        :number="Ffsfjklsdj"
+        label="Famous Category"/> -->
     </div>
-
-    <!-- <card-component
-      title="Performance"
-      :icon="mdiFinance"
-      :header-icon="mdiReload"
-      class="mb-6"
-      @header-icon-click="fillChartData"
-    >
-      <div v-if="chartData">
-        <line-chart :data="chartData" class="h-96"/>
-      </div>
-    </card-component> -->
-
-    <!-- <notification color="info" :icon="mdiMonitorCellphone">
-      <b>Responsive table.</b> Collapses on mobile
-    </notification> -->
-
-    <!-- <card-component :icon="mdiMonitorCellphone" title="Responsive table" has-table>
-      <clients-table />
-    </card-component> -->
+    <card-component :icon="mdiMonitorCellphone" title="Available Pizza's" has-table>
+      <UsersTable/>
+    </card-component>
   </main-section>
 </template>
 
@@ -65,9 +48,10 @@ import * as chartConfig from '@/components/Charts/chart.config'
 import MainSection from '@/components/MainSection'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
-import CardWidget from '@/components/CardWidget'
-// import CardComponent from '@/components/CardComponent'
+// import CardWidget from '@/components/CardWidget'
+import CardComponent from '@/components/CardComponent'
 // import ClientsTable from '@/components/ClientsTable'
+import UsersTable from '../components/UsersTable.vue'
 // import Notification from '@/components/Notification'
 // import JbButton from '@/components/JbButton'
 
@@ -75,15 +59,14 @@ export default {
   name: 'Home',
   components: {
     MainSection,
-    // ClientsTable,
-    // // LineChart,
-    // CardComponent,
-    CardWidget,
+    CardComponent,
+    // CardWidget,
     HeroBar,
-    TitleBar
+    TitleBar,
+    UsersTable
   },
   setup () {
-    const titleStack = ref(['Admin', 'Dashboard'])
+    const titleStack = ref(['Admin', 'Registered Users'])
 
     const chartData = ref(null)
 

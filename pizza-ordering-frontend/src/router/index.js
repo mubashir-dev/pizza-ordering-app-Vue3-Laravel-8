@@ -90,6 +90,30 @@ const routes = [
     name: 'Order Detail',
     component: () => import(/* webpackChunkName: "tables" */ '../views/OrderDetails')
   },
+  {
+    meta: {
+      title: 'Create User'
+    },
+    path: '/create-user',
+    name: 'Create User',
+    component: () => import(/* webpackChunkName: "tables" */ '../views/CreateUser')
+  },
+  {
+    meta: {
+      title: 'Edit User'
+    },
+    path: '/edit-user/:id',
+    name: 'Edit User',
+    component: () => import(/* webpackChunkName: "tables" */ '../views/EditUser')
+  },
+  {
+    meta: {
+      title: 'Users List'
+    },
+    path: '/user_list',
+    name: 'Users List',
+    component: () => import(/* webpackChunkName: "tables" */ '../views/RegisteredUsers')
+  },
 
   {
     meta: {

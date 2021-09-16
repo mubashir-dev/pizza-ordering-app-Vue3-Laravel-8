@@ -24,11 +24,11 @@ use App\Http\Controllers\PizzaCategoryController;
 // });
 
 Route::post('/login', [AuthController::class, 'login']);
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/users', [AuthController::class, 'users']);
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/logout', [AuthController::class, 'logout']);
-});
+// Route::group(['middleware' => ['auth:sanctum']], function () {
+//     Route::get('/users', [AuthController::class, 'users']);
+//     Route::post('/register', [AuthController::class, 'register']);
+//     Route::post('/logout', [AuthController::class, 'logout']);
+// });
 Route::apiResource('/PizzaCategory', PizzaCategoryController::class);
 Route::get('/categories', [PizzaCategoryController::class, 'categories']);
 Route::apiResource('/Pizza', PizzaController::class);
@@ -37,3 +37,9 @@ Route::post('/Orders', [OrdersController::class, 'store']);
 Route::get('/Orders', [OrdersController::class, 'index']);
 Route::get('/Orders/{id}', [OrdersController::class, 'show']);
 Route::get('/Complete/{id}', [OrdersController::class, 'completeOrder']);
+Route::get('/users', [AuthController::class, 'users']);
+Route::get('/users/{id}', [AuthController::class, 'show']);
+Route::put('/users/{id}', [AuthController::class, 'update']);
+Route::delete('/users/{id}', [AuthController::class, 'destroy']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/logout', [AuthController::class, 'logout']);

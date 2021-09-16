@@ -13,12 +13,30 @@ class AuthController extends Controller
 
     public function users()
     {
-        $users = User::orderBy('id','DESC')->get();
+        $users = User::orderBy('id', 'DESC')->get();
         $response = [
-            'users-list' => $users->toArray()
+            'users_list' => $users->toArray()
         ];
         return response($response, 200);
     }
+    public function show($id)
+    {
+        $users = User::find($id);
+        $response = [
+            'users' => $users->toArray()
+        ];
+        return response($response, 200);
+    }
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        $user->delete();
+        $response = [
+            'message' => 'The User Record has been deleted successfully'
+        ];
+        return response($response, 200);
+    }
+
     public function register(Request $request)
     {
 
@@ -43,6 +61,28 @@ class AuthController extends Controller
 
         return response($response, 201);
     }
+
+    public function update(Request $request, $id)
+    {
+
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:users,email,' . $id,
+            'password' => 'required|string|confirmed'
+        ]);
+        $user = User::find($id);
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+        $token = $user->createToken('TodoManager-Api')->plainTextToken;
+        $response = [
+            'token' => $token
+        ];
+        return response($response, 200);
+    }
+
     public function login(Request $request)
     {
         $request->validate([
