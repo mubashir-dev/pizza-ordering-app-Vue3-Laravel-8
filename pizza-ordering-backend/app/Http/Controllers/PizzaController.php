@@ -52,7 +52,10 @@ class PizzaController extends Controller
                 'price' => $request->price,
                 'tax' => $request->tax
             ]);
-            return response('Pizza Record has been Created Successfully', 201);
+            $response = [
+                'message' => 'Pizza Record has been Created Successfully'
+            ];
+            return response($response, 201);
         }
     }
 

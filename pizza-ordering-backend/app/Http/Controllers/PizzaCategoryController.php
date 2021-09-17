@@ -16,10 +16,7 @@ class PizzaCategoryController extends Controller
     public function index()
     {
         $pizzaCategories = PizzaCategory::orderBy('id', 'DESC')->get();
-        $response = [
-            'PizzaCategories' => $pizzaCategories->toArray()
-        ];
-        return response($response, 200);
+        return response()->json(['PizzaCategories' => $pizzaCategories], 200);
     }
     public function categories()
     {
@@ -70,7 +67,7 @@ class PizzaCategoryController extends Controller
             $response = [
                 'message' => 'The Pizza Category has not been Founded'
             ];
-            return response($response, 404);
+            return response()->json($response, 404);
         }
     }
 
@@ -116,25 +113,15 @@ class PizzaCategoryController extends Controller
             if(is_null($pizzaCategory->pizza))
             {
                 $pizzaCategory->delete();
-                $response = [
-                    'message' => 'The Pizza Category has been Deleted'
-                ];
-                return response($response, 200);
+                return response()->json(['message' => 'The Pizza Category has been Deleted', 'status' => '200'], 200);
             }
             else
             {
-                $response = [
-                    'message' => 'The Pizza Category can not be Deleted',
-                    'status' => '409'
-                ];
-                return response($response, 200);
+                return response()->json(['message' => 'The Pizza Category can not be Deleted', 'status' => '200'], 200);
             }
 
         } else {
-            $response = [
-                'message' => 'The Pizza Category has not been Founded'
-            ];
-            return response($response, 404);
+            return response()->json(['message' => 'The Pizza Category has not been Founded', 'status' => '404'], 404);
         }
     }
 }

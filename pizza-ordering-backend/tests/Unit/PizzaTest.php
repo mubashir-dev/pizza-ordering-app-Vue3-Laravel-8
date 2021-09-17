@@ -24,7 +24,26 @@ class PizzaTest extends TestCase
         $pizzas = Pizza::factory()->count(5)->create();
         $this->withoutExceptionHandling();
         $this->get(route('Pizza.index'))
-            ->assertStatus(200);
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'pizzas_list' => [
+                    "*" =>
+                    [
+                        "id",
+                        "title",
+                        "pizza_category",
+                        "pizza_category_id",
+                        "description",
+                        "photo",
+                        "ingredients",
+                        "price",
+                        "tax",
+                        "created_at",
+                        "updated_at"
+                    ]
+
+                ]
+            ]);
     }
     /**
      * A unit test to check if the pizza-single endpoint is returning data properly or not
@@ -36,8 +55,24 @@ class PizzaTest extends TestCase
     {
         $pizza = Pizza::factory()->create();
         $this->withoutExceptionHandling();
-        $this->get(route('Pizza.show',$pizza->id))
-            ->assertStatus(200);
+        $this->get(route('Pizza.show', $pizza->id))
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'pizza' => [
+                        "id",
+                        "title",
+                        "pizza_category",
+                        "pizza_category_id",
+                        "description",
+                        "photo",
+                        "ingredients",
+                        "price",
+                        "tax",
+                        "created_at",
+                        "updated_at"
+                ]
+            ]);
+
     }
     /**
      * A unit test to check if the pizza-storing endpoint is storing data properly or not
@@ -51,7 +86,7 @@ class PizzaTest extends TestCase
         //Fake Storage
         Storage::fake('avatars');
         $data = [
-            'title'=>$this->faker->name(),
+            'title' => $this->faker->name(),
             'pizza_category_id' => 2,
             'photo_url' => UploadedFile::fake()->image('avatar.jpg'),
             'description' => $this->faker->realText($maxNbChars = 200, $indexSize = 2),
@@ -59,8 +94,11 @@ class PizzaTest extends TestCase
             'price' => $this->faker->numberBetween($min = 1500, $max = 6000),
             'tax' => $this->faker->numberBetween($min = 1500, $max = 6000),
         ];
-        $this->post(route('Pizza.store'),$data)
-            ->assertStatus(201);
+        $this->post(route('Pizza.store'), $data)
+            ->assertStatus(201)
+            ->assertJsonStructure([
+                'message'
+            ]);
     }
     /**
      * A unit test to check if the pizza-updating endpoint is storing data properly or not
@@ -76,7 +114,7 @@ class PizzaTest extends TestCase
         //Fake Storage
         Storage::fake('avatars');
         $data = [
-            'title'=>$this->faker->name(),
+            'title' => $this->faker->name(),
             'pizza_category_id' => 2,
             'photo_url' => UploadedFile::fake()->image('avatar.jpg'),
             'description' => $this->faker->realText($maxNbChars = 200, $indexSize = 2),
@@ -84,10 +122,13 @@ class PizzaTest extends TestCase
             'price' => $this->faker->numberBetween($min = 1500, $max = 6000),
             'tax' => $this->faker->numberBetween($min = 1500, $max = 6000),
         ];
-        $this->put(route('Pizza.update',$pizza->id),$data)
-            ->assertStatus(200);
+        $this->put(route('Pizza.update', $pizza->id), $data)
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'message'
+            ]);
     }
-     /**
+    /**
      * A unit test to check if the pizza-delete endpoint is deleting data properly or not
      * Testing the response status
      * Testing the response message delivers properly
@@ -98,7 +139,10 @@ class PizzaTest extends TestCase
         $pizza = Pizza::factory()->create();
 
         $this->withoutExceptionHandling();
-        $this->delete(route('Pizza.destroy',$pizza->id))
-            ->assertStatus(200);
+        $this->delete(route('Pizza.destroy', $pizza->id))
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'message'
+            ]);
     }
 }
