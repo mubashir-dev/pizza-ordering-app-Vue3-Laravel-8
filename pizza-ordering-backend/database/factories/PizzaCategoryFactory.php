@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\PizzaCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Carbon\Carbon;
 
 class PizzaCategoryFactory extends Factory
 {
@@ -22,7 +23,10 @@ class PizzaCategoryFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title'=>$this->faker->name(),
+            'description'=>$this->faker->realText($maxNbChars = 200, $indexSize = 2),
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now()
         ];
     }
 }

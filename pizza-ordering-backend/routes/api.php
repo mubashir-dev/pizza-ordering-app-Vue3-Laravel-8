@@ -30,7 +30,7 @@ Route::post('/login', [AuthController::class, 'login']);
 //     Route::post('/logout', [AuthController::class, 'logout']);
 // });
 Route::apiResource('/PizzaCategory', PizzaCategoryController::class);
-Route::get('/categories', [PizzaCategoryController::class, 'categories']);
+Route::get('/categories', [PizzaCategoryController::class, 'categories'])->name('PizzaCustomCategories');
 Route::apiResource('/Pizza', PizzaController::class);
 Route::apiResource('/Customer', CustomerController::class);
 Route::post('/Orders', [OrdersController::class, 'store']);

@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use App\Models\PizzaCategory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Faker\Factory;
+// use Faker\Factory;
 use Illuminate\Foundation\Testing\WithFaker;
 
 class PizzaCategoryTest extends TestCase
@@ -70,4 +70,16 @@ class PizzaCategoryTest extends TestCase
         $this->get(route('PizzaCategory.destroy', $PizzaCategory->id))
             ->assertStatus(200);
     }
+
+    //Test the Pizza-Category Api categories endpoint
+    //Testing the response status
+    //Testing the response message delivers properly
+    public function test_the_pizza_categories_list_working_properly()
+    {
+        $this->withoutExceptionHandling();
+        $PizzaCategory = PizzaCategory::factory()->create();
+        $this->get(route('PizzaCustomCategories'))
+            ->assertStatus(200);
+    }
+
 }
