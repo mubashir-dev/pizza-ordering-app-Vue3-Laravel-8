@@ -1,16 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Dashboard from '../views/Dashboard'
-import Home from '../views/Index'
 
 const routes = [
-  {
-    meta: {
-      title: 'Pizza Ordering App'
-    },
-    path: '/',
-    name: 'Home Page',
-    component: Home
-  },
   {
     meta: {
       title: 'Pizza Ordering App'
