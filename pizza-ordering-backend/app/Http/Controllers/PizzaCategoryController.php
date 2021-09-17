@@ -17,9 +17,9 @@ class PizzaCategoryController extends Controller
     {
         $pizzaCategories = PizzaCategory::orderBy('id', 'DESC')->get();
         $response = [
-            'PizzaCategories' => $pizzaCategories->toArray()
+            'PizzaCategories' => $pizzaCategories
         ];
-        return response($response, 200);
+        return response()->json($response, 200);
     }
     public function categories()
     {
@@ -48,7 +48,7 @@ class PizzaCategoryController extends Controller
         $response = [
             'message' => 'The Pizza Category has been Created'
         ];
-        return response($response, 201);
+        return response()->json($response, 201);
     }
 
     /**
@@ -65,12 +65,12 @@ class PizzaCategoryController extends Controller
             $response = [
                 'pizza_category' => $pizzaCategory->toArray()
             ];
-            return response($response, 200);
+            return response()->json($response, 200);
         } else {
             $response = [
                 'message' => 'The Pizza Category has not been Founded'
             ];
-            return response($response, 404);
+            return response()->json($response, 404);
         }
     }
 
@@ -94,12 +94,12 @@ class PizzaCategoryController extends Controller
             $response = [
                 'message' => 'The Pizza Category has been Updated'
             ];
-            return response($response, 200);
+            return response()->json($response, 200);
         } else {
             $response = [
                 'message' => 'The Pizza Category has not been Founded'
             ];
-            return response($response, 404);
+            return response()->json($response, 404);
         }
     }
 

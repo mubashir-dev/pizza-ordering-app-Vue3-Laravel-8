@@ -19,7 +19,7 @@ class PizzaController extends Controller
         $response = [
             'pizzas_list' => PizzasCollection::collection(Pizza::orderBy('id', 'DESC')->get()),
         ];
-        return response($response, 200);
+        return response()->json($response, 200);
     }
 
     /**

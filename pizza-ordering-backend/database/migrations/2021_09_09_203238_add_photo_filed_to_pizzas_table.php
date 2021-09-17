@@ -14,7 +14,7 @@ class AddPhotoFiledToPizzasTable extends Migration
     public function up()
     {
         Schema::table('pizzas', function (Blueprint $table) {
-           $table->string('photo_url')->after('description');
+           $table->string('photo_url')->nullable()->after('description');
         });
     }
 

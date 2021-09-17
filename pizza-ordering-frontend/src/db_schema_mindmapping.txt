@@ -1,7 +1,0 @@
-Pizza :{
-    id,title,pizza_cate_id,description,ingredients,price,tax,timestamp
-},
-Pizza Category:
-{
-    id,title,description,timestamp
-}
